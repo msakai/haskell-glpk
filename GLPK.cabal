@@ -1,0 +1,22 @@
+Name:           GLPK
+Version:        0.0.0
+Cabal-Version:  >= 1.6
+License:        BSD3
+Author:         Masahiro Sakai
+Maintainer:     Masahiro Sakai <masahiro.sakai@gmail.com>
+Category:       Algorithms
+Synopsis:       GLPK wrapper
+Description:    Low-level GLPK wrapper
+Stability:      experimental
+Build-Type:	Simple
+
+Source-Repository head
+  type:     git
+  location: git://github.com/msakai/haskell-glpk.git
+
+Library
+  Build-Depends:      base >=4 && <5
+  Hs-Source-Dirs:     src
+  Exposed-Modules:    GLPK
+  Other-Modules:      GLPK.Internal
+  GHC-Options:        -Wall
