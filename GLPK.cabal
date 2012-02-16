@@ -20,3 +20,4 @@ Library
   Exposed-Modules:    GLPK
   Other-Modules:      GLPK.Internal
   GHC-Options:        -Wall
+  Extra-Libraries:    glpk

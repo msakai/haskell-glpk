@@ -6,13 +6,20 @@ import Foreign.C
 
 #include <glpk.h>
 
+-- | library version numbers:
+
+gLP_MAJOR_VERSION = #const GLP_MAJOR_VERSION
+gLP_MINOR_VERSION = #const GLP_MINOR_VERSION
+
 -- | LP/MIP problem object
 data GLP_PROB
 
 -- optimization direction flag:
 -- | minimization
+gLP_MIN :: CInt
 gLP_MIN = #const GLP_MIN
  -- | maximization
+gLP_MAX :: CInt
 gLP_MAX = #const GLP_MAX
 
 -- kind of structural variable:
@@ -25,14 +32,19 @@ gLP_BV = #const GLP_BV
 
 -- type of auxiliary/structural variable:
 -- | free variable
+gLP_FR :: CInt
 gLP_FR = #const GLP_FR
 -- | variable with lower bound
+gLP_LO :: CInt
 gLP_LO = #const GLP_LO
 -- | variable with upper bound
+gLP_UP :: CInt
 gLP_UP = #const GLP_UP 
 -- | double-bounded variable
+gLP_DB :: CInt
 gLP_DB = #const GLP_DB 
 -- | fixed variable
+gLP_FX :: CInt
 gLP_FX = #const GLP_FX 
 
 -- status of auxiliary/structural variable:
@@ -189,4 +201,57 @@ foreign import ccall glp_set_row_name
 -- | assign (change) column name
 foreign import ccall glp_set_col_name
     :: Ptr GLP_PROB -> CInt -> CString -> IO ()
+
+-- | set (change) row bounds
+foreign import ccall glp_set_row_bnds
+    :: Ptr GLP_PROB -> CInt -> CInt -> CDouble -> CDouble -> IO ()
+
+-- | set (change) column bounds
+foreign import ccall glp_set_col_bnds
+    :: Ptr GLP_PROB -> CInt -> CInt -> CDouble -> CDouble -> IO ()
+
+-- | set (change) obj. coefficient or constant term
+foreign import ccall glp_set_obj_coef
+    :: Ptr GLP_PROB -> CInt -> CDouble -> IO ()
+
+{-
+void glp_set_mat_row(glp_prob *P, int i, int len, const int ind[],
+      const double val[]);
+/* set (replace) row of the constraint matrix */
+
+void glp_set_mat_col(glp_prob *P, int j, int len, const int ind[],
+      const double val[]);
+/* set (replace) column of the constraint matrix */
+-}
+
+-- | load (replace) the whole constraint matrix
+foreign import ccall glp_load_matrix
+    :: Ptr GLP_PROB -> CInt -> Ptr CInt -> Ptr CInt -> Ptr CDouble -> IO ()
+
+{-
+int glp_check_dup(int m, int n, int ne, const int ia[], const int ja[]);
+/* check for duplicate elements in sparse matrix */
+
+void glp_sort_matrix(glp_prob *P);
+/* sort elements of the constraint matrix */
+
+void glp_del_rows(glp_prob *P, int nrs, const int num[]);
+/* delete specified rows from problem object */
+
+void glp_del_cols(glp_prob *P, int ncs, const int num[]);
+/* delete specified columns from problem object */
+
+void glp_copy_prob(glp_prob *dest, glp_prob *prob, int names);
+/* copy problem object content */
+
+void glp_erase_prob(glp_prob *P);
+/* erase problem object content */
+-}
+
+-- | delete problem object
+foreign import ccall glp_delete_prob
+    :: Ptr GLP_PROB -> IO ()
+
+foreign import ccall "&glp_delete_prob" glp_delete_prob'
+    :: FunPtr (Ptr GLP_PROB -> IO ())
 
