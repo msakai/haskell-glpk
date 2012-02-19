@@ -1,6 +1,6 @@
 Name:           GLPK
 Version:        0.0.0
-Cabal-Version:  >= 1.6
+Cabal-Version:  >= 1.8
 License:        BSD3
 Author:         Masahiro Sakai
 Maintainer:     Masahiro Sakai <masahiro.sakai@gmail.com>
@@ -21,3 +21,9 @@ Library
   Other-Modules:      GLPK.Internal
   GHC-Options:        -Wall
   Extra-Libraries:    glpk
+
+Test-suite Test1
+  Type:              exitcode-stdio-1.0
+  HS-Source-Dirs:    test1
+  Main-is:           Test1.hs
+  Build-depends:     base >=4 && <5, GLPK

@@ -99,6 +99,9 @@ data GLP_BFCP
 -- | simplex method control parameters
 data GLP_SMCP
 
+sizeof_GLP_SMCP :: Int
+sizeof_GLP_SMCP = #size glp_smcp
+
 -- | INTERIOR-point solver control parameters
 data GLP_IPTCP
 
@@ -255,3 +258,152 @@ foreign import ccall glp_delete_prob
 foreign import ccall "&glp_delete_prob" glp_delete_prob'
     :: FunPtr (Ptr GLP_PROB -> IO ())
 
+{-
+const char *glp_get_prob_name(glp_prob *P);
+/* retrieve problem name */
+
+const char *glp_get_obj_name(glp_prob *P);
+/* retrieve objective function name */
+
+int glp_get_obj_dir(glp_prob *P);
+/* retrieve optimization direction flag */
+
+int glp_get_num_rows(glp_prob *P);
+/* retrieve number of rows */
+
+int glp_get_num_cols(glp_prob *P);
+/* retrieve number of columns */
+
+const char *glp_get_row_name(glp_prob *P, int i);
+/* retrieve row name */
+
+const char *glp_get_col_name(glp_prob *P, int j);
+/* retrieve column name */
+
+int glp_get_row_type(glp_prob *P, int i);
+/* retrieve row type */
+
+double glp_get_row_lb(glp_prob *P, int i);
+/* retrieve row lower bound */
+
+double glp_get_row_ub(glp_prob *P, int i);
+/* retrieve row upper bound */
+
+int glp_get_col_type(glp_prob *P, int j);
+/* retrieve column type */
+
+double glp_get_col_lb(glp_prob *P, int j);
+/* retrieve column lower bound */
+
+double glp_get_col_ub(glp_prob *P, int j);
+/* retrieve column upper bound */
+
+double glp_get_obj_coef(glp_prob *P, int j);
+/* retrieve obj. coefficient or constant term */
+
+int glp_get_num_nz(glp_prob *P);
+/* retrieve number of constraint coefficients */
+
+int glp_get_mat_row(glp_prob *P, int i, int ind[], double val[]);
+/* retrieve row of the constraint matrix */
+
+int glp_get_mat_col(glp_prob *P, int j, int ind[], double val[]);
+/* retrieve column of the constraint matrix */
+
+void glp_create_index(glp_prob *P);
+/* create the name index */
+
+int glp_find_row(glp_prob *P, const char *name);
+/* find row by its name */
+
+int glp_find_col(glp_prob *P, const char *name);
+/* find column by its name */
+
+void glp_delete_index(glp_prob *P);
+/* delete the name index */
+
+void glp_set_rii(glp_prob *P, int i, double rii);
+/* set (change) row scale factor */
+
+void glp_set_sjj(glp_prob *P, int j, double sjj);
+/* set (change) column scale factor */
+
+double glp_get_rii(glp_prob *P, int i);
+/* retrieve row scale factor */
+
+double glp_get_sjj(glp_prob *P, int j);
+/* retrieve column scale factor */
+
+void glp_scale_prob(glp_prob *P, int flags);
+/* scale problem data */
+
+void glp_unscale_prob(glp_prob *P);
+/* unscale problem data */
+
+void glp_set_row_stat(glp_prob *P, int i, int stat);
+/* set (change) row status */
+
+void glp_set_col_stat(glp_prob *P, int j, int stat);
+/* set (change) column status */
+
+void glp_std_basis(glp_prob *P);
+/* construct standard initial LP basis */
+
+void glp_adv_basis(glp_prob *P, int flags);
+/* construct advanced initial LP basis */
+
+void glp_cpx_basis(glp_prob *P);
+/* construct Bixby's initial LP basis */
+-}
+
+-- | solve LP problem with the simplex method
+foreign import ccall glp_simplex
+    :: Ptr GLP_PROB -> Ptr GLP_SMCP -> IO CInt
+
+-- | solve LP problem in exact arithmetic
+foreign import ccall glp_exact
+    :: Ptr GLP_PROB -> Ptr GLP_SMCP -> IO CInt
+
+-- | initialize simplex method control parameters
+foreign import ccall glp_init_smcp
+    :: Ptr GLP_SMCP -> IO ()
+
+-- | retrieve generic status of basic solution
+foreign import ccall glp_get_status
+    :: Ptr GLP_PROB -> IO CInt
+
+{-
+int glp_get_prim_stat(glp_prob *P);
+/* retrieve status of primal basic solution */
+
+int glp_get_dual_stat(glp_prob *P);
+/* retrieve status of dual basic solution */
+-}
+
+-- | retrieve objective value (basic solution)
+foreign import ccall glp_get_obj_val
+    :: Ptr GLP_PROB -> IO CDouble
+
+-- | retrieve row status
+foreign import ccall glp_get_row_stat
+     :: Ptr GLP_PROB -> CInt -> IO CInt
+
+-- | retrieve row primal value (basic solution)
+foreign import ccall glp_get_row_prim
+     :: Ptr GLP_PROB -> CInt -> IO CDouble
+
+-- | retrieve row dual value (basic solution)
+foreign import ccall glp_get_row_dual
+     :: Ptr GLP_PROB -> CInt -> IO CDouble
+
+-- | retrieve column status
+foreign import ccall glp_get_col_stat
+     :: Ptr GLP_PROB -> CInt -> IO CInt
+
+-- | retrieve column primal value (basic solution)
+foreign import ccall glp_get_col_prim
+     :: Ptr GLP_PROB -> CInt -> IO CDouble
+
+-- | retrieve column dual value (basic solution)
+foreign import ccall glp_get_col_dual
+     :: Ptr GLP_PROB -> CInt -> IO CDouble

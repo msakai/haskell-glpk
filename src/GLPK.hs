@@ -13,6 +13,8 @@ data Dir = Min | Max
 data VarType = FR | LO | UP | DB | FX
   deriving (Eq, Ord, Enum, Bounded, Show, Read)
 
+type SMCP = ForeignPtr GLP_SMCP
+
 encodeVarType :: VarType -> CInt
 encodeVarType FR = gLP_FR
 encodeVarType LO = gLP_LO
@@ -82,10 +84,39 @@ loadMatrix :: Problem -> [((Int,Int),Double)] -> IO ()
 loadMatrix (Problem prob) m =
   withForeignPtr prob $ \p ->  do
     let n = length m
-    let is = [fromIntegral i | ((i,_),_) <- m]
-    let js = [fromIntegral j | ((_,j),_) <- m]
-    let vs = [realToFrac v | (_,v) <- m]
+    let is = 0:[fromIntegral i | ((i,_),_) <- m]
+    let js = 0:[fromIntegral j | ((_,j),_) <- m]
+    let vs = 0:[realToFrac v | (_,v) <- m]
     withArray is $ \is2 ->
       withArray js $ \js2 ->
         withArray vs $ \vs2 ->
           glp_load_matrix p (fromIntegral n) is2 js2 vs2
+
+-- | solve LP problem with the simplex method
+simplex :: Problem -> SMCP -> IO Int
+simplex (Problem prob) smcp =
+  withForeignPtr prob $ \p ->
+    withForeignPtr smcp $ \q -> 
+      liftM fromIntegral $ glp_simplex p q
+
+-- | solve LP problem in exact arithmetic
+exact :: Problem -> SMCP -> IO Int
+exact = undefined
+
+newSMCP :: IO SMCP
+newSMCP = do
+  fp <- mallocForeignPtrBytes sizeof_GLP_SMCP
+  withForeignPtr fp glp_init_smcp    
+  return fp
+
+getObjVal :: Problem -> IO Double
+getObjVal (Problem prob) =
+  withForeignPtr prob $ \p ->  do
+    val <- glp_get_obj_val p
+    return (realToFrac val)
+
+getColPrim :: Problem -> Int -> IO Double
+getColPrim (Problem prob) j =
+  withForeignPtr prob $ \p ->  do
+    val <- glp_get_col_prim p (fromIntegral j)
+    return (realToFrac val)
