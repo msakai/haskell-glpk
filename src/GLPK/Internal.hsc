@@ -6,8 +6,7 @@ import Foreign.C
 
 #include <glpk.h>
 
--- | library version numbers:
-
+-- library version numbers:
 gLP_MAJOR_VERSION = #const GLP_MAJOR_VERSION
 gLP_MINOR_VERSION = #const GLP_MINOR_VERSION
 
@@ -39,13 +38,13 @@ gLP_LO :: CInt
 gLP_LO = #const GLP_LO
 -- | variable with upper bound
 gLP_UP :: CInt
-gLP_UP = #const GLP_UP 
+gLP_UP = #const GLP_UP
 -- | double-bounded variable
 gLP_DB :: CInt
-gLP_DB = #const GLP_DB 
+gLP_DB = #const GLP_DB
 -- | fixed variable
 gLP_FX :: CInt
-gLP_FX = #const GLP_FX 
+gLP_FX = #const GLP_FX
 
 -- status of auxiliary/structural variable:
 -- | basic variable
@@ -114,55 +113,93 @@ data GLP_IOCP
 -- | additional row attributes
 data GLP_ATTR
 
--- /* enable/disable flag: */
--- #define GLP_ON             1  /* enable something */
--- #define GLP_OFF            0  /* disable something */
--- 
--- /* reason codes: */
--- #define GLP_IROWGEN     0x01  /* request for row generation */
--- #define GLP_IBINGO      0x02  /* better integer solution found */
--- #define GLP_IHEUR       0x03  /* request for heuristic solution */
--- #define GLP_ICUTGEN     0x04  /* request for cut generation */
--- #define GLP_IBRANCH     0x05  /* request for branching */
--- #define GLP_ISELECT     0x06  /* request for subproblem selection */
--- #define GLP_IPREPRO     0x07  /* request for preprocessing */
--- 
--- /* branch selection indicator: */
--- #define GLP_NO_BRNCH       0  /* select no branch */
--- #define GLP_DN_BRNCH       1  /* select down-branch */
--- #define GLP_UP_BRNCH       2  /* select up-branch */
--- 
--- /* return codes: */
--- #define GLP_EBADB       0x01  /* invalid basis */
--- #define GLP_ESING       0x02  /* singular matrix */
--- #define GLP_ECOND       0x03  /* ill-conditioned matrix */
--- #define GLP_EBOUND      0x04  /* invalid bounds */
--- #define GLP_EFAIL       0x05  /* solver failed */
--- #define GLP_EOBJLL      0x06  /* objective lower limit reached */
--- #define GLP_EOBJUL      0x07  /* objective upper limit reached */
--- #define GLP_EITLIM      0x08  /* iteration limit exceeded */
--- #define GLP_ETMLIM      0x09  /* time limit exceeded */
--- #define GLP_ENOPFS      0x0A  /* no primal feasible solution */
--- #define GLP_ENODFS      0x0B  /* no dual feasible solution */
--- #define GLP_EROOT       0x0C  /* root LP optimum not provided */
--- #define GLP_ESTOP       0x0D  /* search terminated by application */
--- #define GLP_EMIPGAP     0x0E  /* relative mip gap tolerance reached */
--- #define GLP_ENOFEAS     0x0F  /* no primal/dual feasible solution */
--- #define GLP_ENOCVG      0x10  /* no convergence */
--- #define GLP_EINSTAB     0x11  /* numerical instability */
--- #define GLP_EDATA       0x12  /* invalid data */
--- #define GLP_ERANGE      0x13  /* result out of range */
--- 
--- /* condition indicator: */
--- #define GLP_KKT_PE         1  /* primal equalities */
--- #define GLP_KKT_PB         2  /* primal bounds */
--- #define GLP_KKT_DE         3  /* dual equalities */
--- #define GLP_KKT_DB         4  /* dual bounds */
--- #define GLP_KKT_CS         5  /* complementary slackness */
--- 
--- /* MPS file format: */
--- #define GLP_MPS_DECK       1  /* fixed (ancient) */
--- #define GLP_MPS_FILE       2  /* free (modern) */
+-- enable/disable flag:
+-- | enable something
+gLP_ON = #const GLP_ON
+-- | disable something
+gLP_OFF = #const GLP_OFF
+
+-- reason codes:
+-- | request for row generation
+gLP_IROWGEN = #const GLP_IROWGEN
+-- | better integer solution found
+gLP_IBINGO  = #const GLP_IBINGO
+-- | request for heuristic solution
+gLP_IHEUR   = #const GLP_IHEUR
+-- | request for cut generation
+gLP_ICUTGEN = #const GLP_ICUTGEN
+-- | request for branching
+gLP_IBRANCH = #const GLP_IBRANCH
+-- | request for subproblem selection
+gLP_ISELECT = #const GLP_ISELECT
+-- | request for preprocessing
+gLP_IPREPRO = #const GLP_IPREPRO
+
+-- branch selection indicator:
+-- | select no branch
+gLP_NO_BRNCH = #const GLP_NO_BRNCH
+-- | select down-branch
+gLP_DN_BRNCH = #const GLP_DN_BRNCH
+-- | select up-branch
+gLP_UP_BRNCH = #const GLP_UP_BRNCH
+
+-- return codes:
+-- | invalid basis
+gLP_EBADB   = #const GLP_EBADB
+-- | singular matrix
+gLP_ESING   = #const GLP_ESING
+-- | ill-conditioned matrix
+gLP_ECOND   = #const GLP_ECOND
+-- | invalid bounds
+gLP_EBOUND  = #const GLP_EBOUND
+-- | solver failed
+gLP_EFAIL   = #const GLP_EFAIL
+-- | objective lower limit reached
+gLP_EOBJLL  = #const GLP_EOBJLL
+-- | objective upper limit reached
+gLP_EOBJUL  = #const GLP_EOBJUL
+-- | iteration limit exceeded
+gLP_EITLIM  = #const GLP_EITLIM
+-- | time limit exceeded
+gLP_ETMLIM  = #const GLP_ETMLIM
+-- | no primal feasible solution
+gLP_ENOPFS  = #const GLP_ENOPFS
+-- | no dual feasible solution
+gLP_ENODFS  = #const GLP_ENODFS
+-- | root LP optimum not provided
+gLP_EROOT   = #const GLP_EROOT
+-- | search terminated by application
+gLP_ESTOP   = #const GLP_ESTOP
+-- | relative mip gap tolerance reached
+gLP_EMIPGAP = #const GLP_EMIPGAP
+-- | no primal/dual feasible solution
+gLP_ENOFEAS = #const GLP_ENOFEAS
+-- | no convergence
+gLP_ENOCVG  = #const GLP_ENOCVG
+-- | numerical instability
+gLP_EINSTAB = #const GLP_EINSTAB
+-- | invalid data
+gLP_EDATA   = #const GLP_EDATA
+-- | result out of range
+gLP_ERANGE  = #const GLP_ERANGE
+
+-- condition indicator:
+-- | primal equalities
+gLP_KKT_PE = #const GLP_KKT_PE
+-- | primal bounds
+gLP_KKT_PB = #const GLP_KKT_PB
+-- | dual equalities
+gLP_KKT_DE = #const GLP_KKT_DE
+-- | dual bounds
+gLP_KKT_DB = #const GLP_KKT_DB
+-- | complementary slackness
+gLP_KKT_CS = #const GLP_KKT_CS
+
+-- MPS file format:
+-- | fixed (ancient)
+gLP_MPS_DECK = #const GLP_MPS_DECK
+-- | free (modern)
+gLP_MPS_FILE = #const GLP_MPS_FILE
 
 -- | MPS format control parameters
 data GLP_MPSCP
@@ -217,144 +254,177 @@ foreign import ccall glp_set_col_bnds
 foreign import ccall glp_set_obj_coef
     :: Ptr GLP_PROB -> CInt -> CDouble -> IO ()
 
-{-
-void glp_set_mat_row(glp_prob *P, int i, int len, const int ind[],
-      const double val[]);
-/* set (replace) row of the constraint matrix */
+-- | set (replace) row of the constraint matrix
+foreign import ccall glp_set_mat_row
+    :: Ptr GLP_PROB -> CInt -> CInt -> Ptr CInt -> Ptr CDouble -> IO ()
 
-void glp_set_mat_col(glp_prob *P, int j, int len, const int ind[],
-      const double val[]);
-/* set (replace) column of the constraint matrix */
--}
+-- | set (replace) column of the constraint matrix
+foreign import ccall glp_set_mat_col
+    :: Ptr GLP_PROB -> CInt -> CInt -> Ptr CInt -> Ptr CDouble -> IO ()
 
 -- | load (replace) the whole constraint matrix
 foreign import ccall glp_load_matrix
     :: Ptr GLP_PROB -> CInt -> Ptr CInt -> Ptr CInt -> Ptr CDouble -> IO ()
 
-{-
-int glp_check_dup(int m, int n, int ne, const int ia[], const int ja[]);
-/* check for duplicate elements in sparse matrix */
+-- | check for duplicate elements in sparse matrix
+foreign import ccall glp_check_dup
+    :: Ptr GLP_PROB -> CInt -> CInt -> CInt -> Ptr CInt -> Ptr CInt -> IO CInt
 
-void glp_sort_matrix(glp_prob *P);
-/* sort elements of the constraint matrix */
+-- | sort elements of the constraint matrix
+foreign import ccall glp_sort_matrix
+    :: Ptr GLP_PROB -> IO ()
 
-void glp_del_rows(glp_prob *P, int nrs, const int num[]);
-/* delete specified rows from problem object */
+-- | delete specified rows from problem object
+foreign import ccall glp_del_rows
+    :: Ptr GLP_PROB -> CInt -> Ptr CInt -> IO ()
 
-void glp_del_cols(glp_prob *P, int ncs, const int num[]);
-/* delete specified columns from problem object */
+-- | delete specified columns from problem object
+foreign import ccall glp_del_cols
+    :: Ptr GLP_PROB -> CInt -> Ptr CInt -> IO ()
 
-void glp_copy_prob(glp_prob *dest, glp_prob *prob, int names);
-/* copy problem object content */
+-- | copy problem object content
+foreign import ccall glp_copy_prob
+    :: Ptr GLP_PROB -> Ptr GLP_PROB -> CInt -> IO ()
 
-void glp_erase_prob(glp_prob *P);
-/* erase problem object content */
--}
+-- | erase problem object content
+foreign import ccall glp_erase_prob
+    :: Ptr GLP_PROB -> IO ()
 
 -- | delete problem object
 foreign import ccall glp_delete_prob
     :: Ptr GLP_PROB -> IO ()
 
+-- | delete problem object
 foreign import ccall "&glp_delete_prob" glp_delete_prob'
     :: FunPtr (Ptr GLP_PROB -> IO ())
 
-{-
-const char *glp_get_prob_name(glp_prob *P);
-/* retrieve problem name */
+-- | retrieve problem name
+foreign import ccall glp_get_prob_name
+    :: Ptr GLP_PROB -> IO CString
 
-const char *glp_get_obj_name(glp_prob *P);
-/* retrieve objective function name */
+-- | retrieve objective function name
+foreign import ccall glp_get_obj_name
+    :: Ptr GLP_PROB -> IO CString
 
-int glp_get_obj_dir(glp_prob *P);
-/* retrieve optimization direction flag */
+-- | retrieve optimization direction flag
+foreign import ccall glp_get_obj_dir
+    :: Ptr GLP_PROB -> IO CInt
 
-int glp_get_num_rows(glp_prob *P);
-/* retrieve number of rows */
+-- | retrieve number of rows
+foreign import ccall glp_get_num_rows
+    :: Ptr GLP_PROB -> IO CInt
 
-int glp_get_num_cols(glp_prob *P);
-/* retrieve number of columns */
+-- | retrieve number of columns
+foreign import ccall glp_get_num_cols
+    :: Ptr GLP_PROB -> IO CInt
 
-const char *glp_get_row_name(glp_prob *P, int i);
-/* retrieve row name */
+-- | retrieve row name
+foreign import ccall glp_get_row_name
+    :: Ptr GLP_PROB -> CInt -> IO CString
 
-const char *glp_get_col_name(glp_prob *P, int j);
-/* retrieve column name */
+-- | retrieve column name
+foreign import ccall glp_get_col_name
+    :: Ptr GLP_PROB -> CInt -> IO CString
 
-int glp_get_row_type(glp_prob *P, int i);
-/* retrieve row type */
+-- | retrieve row type
+foreign import ccall glp_get_row_type
+    :: Ptr GLP_PROB -> CInt -> IO CInt
 
-double glp_get_row_lb(glp_prob *P, int i);
-/* retrieve row lower bound */
+-- | retrieve row lower bound
+foreign import ccall glp_get_row_lb
+    :: Ptr GLP_PROB -> CInt -> IO CDouble
 
-double glp_get_row_ub(glp_prob *P, int i);
-/* retrieve row upper bound */
+-- | retrieve row upper bound
+foreign import ccall glp_get_row_ub
+    :: Ptr GLP_PROB -> CInt -> IO CDouble
 
-int glp_get_col_type(glp_prob *P, int j);
-/* retrieve column type */
+-- | retrieve column type
+foreign import ccall glp_get_col_type
+    :: Ptr GLP_PROB -> CInt -> IO CInt
 
-double glp_get_col_lb(glp_prob *P, int j);
-/* retrieve column lower bound */
+-- | retrieve column lower bound
+foreign import ccall glp_get_col_lb
+    :: Ptr GLP_PROB -> CInt -> IO CDouble
 
-double glp_get_col_ub(glp_prob *P, int j);
-/* retrieve column upper bound */
+-- | retrieve column upper bound
+foreign import ccall glp_get_col_ub
+    :: Ptr GLP_PROB -> CInt -> IO CDouble
 
-double glp_get_obj_coef(glp_prob *P, int j);
-/* retrieve obj. coefficient or constant term */
+-- | retrieve obj. coefficient or constant term
+foreign import ccall glp_get_obj_coef
+    :: Ptr GLP_PROB -> CInt -> IO CDouble
 
-int glp_get_num_nz(glp_prob *P);
-/* retrieve number of constraint coefficients */
+-- | retrieve number of constraint coefficients
+foreign import ccall glp_get_num_nz
+    :: Ptr GLP_PROB -> IO CInt
 
-int glp_get_mat_row(glp_prob *P, int i, int ind[], double val[]);
-/* retrieve row of the constraint matrix */
+-- | retrieve row of the constraint matrix
+foreign import ccall glp_get_mat_row
+    :: Ptr GLP_PROB -> CInt -> Ptr CInt -> Ptr CDouble -> IO CInt
 
-int glp_get_mat_col(glp_prob *P, int j, int ind[], double val[]);
-/* retrieve column of the constraint matrix */
+-- | retrieve column of the constraint matrix
+foreign import ccall glp_get_mat_col
+    :: Ptr GLP_PROB -> CInt -> Ptr CInt -> Ptr CDouble -> IO CInt
 
-void glp_create_index(glp_prob *P);
-/* create the name index */
+-- | create the name index
+foreign import ccall glp_create_index
+    :: Ptr GLP_PROB -> IO ()
 
-int glp_find_row(glp_prob *P, const char *name);
-/* find row by its name */
+-- | find row by its name
+foreign import ccall glp_find_row
+    :: Ptr GLP_PROB -> CString -> IO ()
 
-int glp_find_col(glp_prob *P, const char *name);
-/* find column by its name */
+-- | find column by its name
+foreign import ccall glp_find_col
+    :: Ptr GLP_PROB -> CString -> IO ()
 
-void glp_delete_index(glp_prob *P);
-/* delete the name index */
+-- | delete the name index
+foreign import ccall glp_delete_index
+    :: Ptr GLP_PROB -> IO ()
 
-void glp_set_rii(glp_prob *P, int i, double rii);
-/* set (change) row scale factor */
+-- | set (change) row scale factor
+foreign import ccall glp_set_rii
+    :: Ptr GLP_PROB -> CInt -> CDouble -> IO ()
 
-void glp_set_sjj(glp_prob *P, int j, double sjj);
-/* set (change) column scale factor */
+-- | set (change) column scale factor
+foreign import ccall glp_set_sjj
+    :: Ptr GLP_PROB -> CInt -> CDouble -> IO ()
 
-double glp_get_rii(glp_prob *P, int i);
-/* retrieve row scale factor */
+-- | retrieve row scale factor
+foreign import ccall glp_get_rii
+    :: Ptr GLP_PROB -> CInt -> IO CDouble
 
-double glp_get_sjj(glp_prob *P, int j);
-/* retrieve column scale factor */
+-- | retrieve column scale factor
+foreign import ccall glp_get_sjj
+    :: Ptr GLP_PROB -> CInt -> IO CDouble
 
-void glp_scale_prob(glp_prob *P, int flags);
-/* scale problem data */
+-- | scale problem data
+foreign import ccall glp_scale_prob
+    :: Ptr GLP_PROB -> CInt -> IO ()
 
-void glp_unscale_prob(glp_prob *P);
-/* unscale problem data */
+-- | unscale problem data
+foreign import ccall glp_unscale_prob
+    :: Ptr GLP_PROB -> IO ()
 
-void glp_set_row_stat(glp_prob *P, int i, int stat);
-/* set (change) row status */
+-- | set (change) row status
+foreign import ccall glp_set_row_stat
+    :: Ptr GLP_PROB -> CInt -> CInt -> IO ()
 
-void glp_set_col_stat(glp_prob *P, int j, int stat);
-/* set (change) column status */
+-- | set (change) column status
+foreign import ccall glp_set_col_stat
+    :: Ptr GLP_PROB -> CInt -> CInt -> IO ()
 
-void glp_std_basis(glp_prob *P);
-/* construct standard initial LP basis */
+-- | construct standard initial LP basis
+foreign import ccall glp_std_basis
+    :: Ptr GLP_PROB -> IO ()
 
-void glp_adv_basis(glp_prob *P, int flags);
-/* construct advanced initial LP basis */
+-- | construct advanced initial LP basis
+foreign import ccall glp_adv_basis
+    :: Ptr GLP_PROB -> IO ()
 
-void glp_cpx_basis(glp_prob *P);
-/* construct Bixby's initial LP basis */
--}
+-- | construct Bixby's initial LP basis
+foreign import ccall glp_cpx_basis
+    :: Ptr GLP_PROB -> IO ()
 
 -- | solve LP problem with the simplex method
 foreign import ccall glp_simplex
@@ -372,13 +442,13 @@ foreign import ccall glp_init_smcp
 foreign import ccall glp_get_status
     :: Ptr GLP_PROB -> IO CInt
 
-{-
-int glp_get_prim_stat(glp_prob *P);
-/* retrieve status of primal basic solution */
+-- | retrieve status of primal basic solution
+foreign import ccall glp_get_prim_stat
+    :: Ptr GLP_PROB -> IO CInt
 
-int glp_get_dual_stat(glp_prob *P);
-/* retrieve status of dual basic solution */
--}
+-- | retrieve status of dual basic solution
+foreign import ccall glp_get_dual_stat
+    :: Ptr GLP_PROB -> IO CInt
 
 -- | retrieve objective value (basic solution)
 foreign import ccall glp_get_obj_val
@@ -407,3 +477,7 @@ foreign import ccall glp_get_col_prim
 -- | retrieve column dual value (basic solution)
 foreign import ccall glp_get_col_dual
      :: Ptr GLP_PROB -> CInt -> IO CDouble
+
+-- | determine variable causing unboundedness
+foreign import ccall glp_get_unbnd_ray
+     :: Ptr GLP_PROB -> IO CInt
