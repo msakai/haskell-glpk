@@ -481,3 +481,87 @@ foreign import ccall glp_get_col_dual
 -- | determine variable causing unboundedness
 foreign import ccall glp_get_unbnd_ray
      :: Ptr GLP_PROB -> IO CInt
+
+-- | solve LP problem with the interior-point method
+foreign import ccall glp_interior
+     :: Ptr GLP_PROB -> Ptr GLP_IPTCP -> IO CInt
+
+-- | initialize interior-point solver control parameters
+foreign import ccall glp_init_iptcp
+     :: Ptr GLP_IPTCP -> IO ()
+
+-- | retrieve status of interior-point solution
+foreign import ccall glp_ipt_status
+     :: Ptr GLP_PROB -> IO CInt
+
+-- | retrieve objective value (interior point)
+foreign import ccall glp_ipt_obj_val
+     :: Ptr GLP_PROB -> IO CDouble
+
+-- | retrieve row primal value (interior point)
+foreign import ccall glp_ipt_row_prim
+     :: Ptr GLP_PROB -> CInt -> IO CDouble
+
+-- | retrieve row dual value (interior point)
+foreign import ccall glp_ipt_row_dual
+     :: Ptr GLP_PROB -> CInt -> IO CDouble
+
+-- | retrieve column primal value (interior point)
+foreign import ccall glp_ipt_col_prim
+     :: Ptr GLP_PROB -> CInt -> IO CDouble
+
+-- | retrieve column dual value (interior point)
+foreign import ccall glp_ipt_col_dual
+     :: Ptr GLP_PROB -> CInt -> IO CDouble
+
+-- | set (change) column kind
+foreign import ccall glp_set_col_kind
+     :: Ptr GLP_PROB -> CInt -> CInt -> IO ()
+
+-- | retrieve column kind
+foreign import ccall glp_get_col_kind
+     :: Ptr GLP_PROB -> CInt -> IO CInt
+
+-- | retrieve number of integer columns
+foreign import ccall glp_get_num_int
+     :: Ptr GLP_PROB -> IO CInt
+
+-- | retrieve number of binary columns
+foreign import ccall glp_get_num_bin
+     :: Ptr GLP_PROB -> IO CInt
+
+-- | solve MIP problem with the branch-and-bound method
+foreign import ccall glp_intopt
+     :: Ptr GLP_PROB -> Ptr GLP_IOCP -> IO CInt
+
+-- | initialize integer optimizer control parameters
+foreign import ccall glp_init_iocp
+     :: Ptr GLP_IOCP -> IO ()
+
+-- | retrieve status of MIP solution
+foreign import ccall glp_mip_status
+     :: Ptr GLP_PROB -> IO CInt
+
+-- | retrieve objective value (MIP solution)
+foreign import ccall glp_mip_obj_val
+     :: Ptr GLP_PROB -> IO CDouble
+
+-- | retrieve row value (MIP solution)
+foreign import ccall glp_mip_row_val
+     :: Ptr GLP_PROB -> CInt -> IO CDouble
+
+-- | retrieve column value (MIP solution)
+foreign import ccall glp_mip_col_val
+     :: Ptr GLP_PROB -> CInt -> IO CDouble
+
+-- | write basic solution in printable format
+foreign import ccall glp_print_sol
+     :: Ptr GLP_PROB -> CString -> IO CInt
+
+-- | read basic solution from text file
+foreign import ccall glp_read_sol
+     :: Ptr GLP_PROB -> CString -> IO CInt
+
+-- | write basic solution to text file
+foreign import ccall glp_write_sol
+     :: Ptr GLP_PROB -> CString -> IO CInt
